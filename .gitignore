@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### H2 ###
-./src/main/resources/data
+src/main/resources/data
