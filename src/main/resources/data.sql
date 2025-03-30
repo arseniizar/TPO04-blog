@@ -1,50 +1,51 @@
-INSERT INTO users (name)
-VALUES ('Zahra');
-INSERT INTO users (name)
-VALUES ('Taran');
-INSERT INTO users (name)
-VALUES ('Lexi');
-INSERT INTO users (name)
-VALUES ('Blaise');
-INSERT INTO users (name)
-VALUES ('Marisol');
-INSERT INTO users (name)
-VALUES ('Rune');
-INSERT INTO users (name)
-VALUES ('Haven');
-INSERT INTO users (name)
-VALUES ('Ozias');
-INSERT INTO users (name)
-VALUES ('Fable');
-INSERT INTO users (name)
-VALUES ('Nova');
-INSERT INTO users (name)
-VALUES ('Echo');
-INSERT INTO users (name)
-VALUES ('Pax');
-INSERT INTO users (name)
-VALUES ('Zara');
-INSERT INTO users (name)
-VALUES ('Cyra');
-INSERT INTO users (name)
-VALUES ('Galen');
-INSERT INTO users (name)
-VALUES ('Soren');
-INSERT INTO users (name)
-VALUES ('Indra');
-INSERT INTO users (name)
-VALUES ('Arlo');
-INSERT INTO users (name)
-VALUES ('Kairo');
-INSERT INTO users (name)
-VALUES ('Riven');
+INSERT INTO users (email)
+VALUES ('abc123@random.com');
+INSERT INTO users (email)
+VALUES ('zyx987@domain.com');
+INSERT INTO users (email)
+VALUES ('randon0@example.org');
+INSERT INTO users (email)
+VALUES ('user42@randommail.com');
+INSERT INTO users (email)
+VALUES ('alpha.beta@random.net');
+INSERT INTO users (email)
+VALUES ('testuser88@sample.org');
+INSERT INTO users (email)
+VALUES ('flux9@labmail.com');
+INSERT INTO users (email)
+VALUES ('omega12@fakemail.com');
+INSERT INTO users (email)
+VALUES ('spark99@domain.net');
+INSERT INTO users (email)
+VALUES ('delta1@xyz.com');
+INSERT INTO users (email)
+VALUES ('maverick@randommail.org');
+INSERT INTO users (email)
+VALUES ('echo7@sample.com');
+INSERT INTO users (email)
+VALUES ('nova22@random.net');
+INSERT INTO users (email)
+VALUES ('pyro5@domain.org');
+INSERT INTO users (email)
+VALUES ('mystic1@abc.com');
+INSERT INTO users (email)
+VALUES ('quantum3@sample.net');
+INSERT INTO users (email)
+VALUES ('starry@fakemail.net');
+INSERT INTO users (email)
+VALUES ('lunar@random.com');
+INSERT INTO users (email)
+VALUES ('cosmic@domain.com');
+INSERT INTO users (email)
+VALUES ('sparkler@sample.org');
 
 INSERT INTO roles (name)
-VALUES ('Crew');
+VALUES ('Visitor');
 INSERT INTO roles (name)
-VALUES ('Scout');
+VALUES ('Author');
 INSERT INTO roles (name)
-VALUES ('Wizard');
+VALUES ('Admin');
+-- just other random roles in order to have 20
 INSERT INTO roles (name)
 VALUES ('Alchemist');
 INSERT INTO roles (name)

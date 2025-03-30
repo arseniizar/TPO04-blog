@@ -3,6 +3,7 @@ package org.example.tpo04blog.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "articles")
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,5 +52,15 @@ public class Article {
 
     public void setBlog(Blog blog) {
         this.blog = blog;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author=" + author +
+                ", blog=" + blog +
+                '}';
     }
 }

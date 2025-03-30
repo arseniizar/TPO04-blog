@@ -12,14 +12,12 @@ public abstract class AbstractGenericCrudController<T, ID> implements GenericCru
     @Override
     public void viewAll() {
         List<T> entities = getService().findAll();
-        System.out.println("All records:");
         entities.forEach(System.out::println);
     }
 
     @Override
     public void add(T entity) {
         T saved = getService().save(entity);
-        System.out.println("Added: " + saved);
     }
 
     @Override
@@ -30,6 +28,10 @@ public abstract class AbstractGenericCrudController<T, ID> implements GenericCru
     @Override
     public void delete(ID id) {
         getService().delete(id);
-        System.out.println("Deleted entity with ID: " + id);
+    }
+
+    @Override
+    public void update(ID id, T entity) {
+        getService().update(id, entity);
     }
 }

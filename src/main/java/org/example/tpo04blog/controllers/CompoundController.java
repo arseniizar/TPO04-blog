@@ -55,19 +55,16 @@ public class CompoundController {
         articleController.add(article);
     }
 
-    public void searchUser(Long id) {
-        User user = userController.searchById(id);
-        System.out.println(user);
+    public User searchUser(Long id) {
+        return userController.searchById(id);
     }
 
-    public void searchBlog(Long id) {
-        Blog blog = blogController.searchById(id);
-        System.out.println(blog);
+    public Blog searchBlog(Long id) {
+        return blogController.searchById(id);
     }
 
-    public void searchRole(Long id) {
-        Role role = roleController.searchById(id);
-        System.out.println(role);
+    public Role searchRole(Long id) {
+        return roleController.searchById(id);
     }
 
     public void searchArticle(Long id) {
@@ -89,5 +86,26 @@ public class CompoundController {
 
     public void deleteArticle(Long id) {
         articleController.delete(id);
+    }
+
+
+    public User getUserById(Long userId) {
+        return userController.searchById(userId);
+    }
+
+    public Role getRoleById(Long roleId) {
+        return roleController.searchById(roleId);
+    }
+
+    public Blog getBlogById(Long blogId) {
+        return blogController.searchById(blogId);
+    }
+
+    public void updateUser(User user) {
+        userController.update(user.getId(), user);
+    }
+
+    public void updateBlog(Blog blog) {
+        blogController.update(blog.getId(), blog);
     }
 }

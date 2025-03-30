@@ -6,12 +6,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "blogs")
 public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    private User manager;
 
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Article> articles = new HashSet<>();
@@ -38,5 +43,23 @@ public class Blog {
 
     public void setArticles(Set<Article> articles) {
         this.articles = articles;
+    }
+
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
+    }
+
+    @Override
+    public String toString() {
+        return "Blog{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", manager=" + manager +
+                ", articles=" + articles +
+                '}';
     }
 }
