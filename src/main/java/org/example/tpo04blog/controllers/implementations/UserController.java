@@ -2,7 +2,7 @@ package org.example.tpo04blog.controllers.implementations;
 
 import org.example.tpo04blog.controllers.base.AbstractGenericCrudController;
 import org.example.tpo04blog.entities.User;
-import org.example.tpo04blog.services.GenericCrudService;
+import org.example.tpo04blog.services.base.GenericCrudService;
 import org.example.tpo04blog.services.user.UserService;
 import org.springframework.stereotype.Controller;
 

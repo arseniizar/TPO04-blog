@@ -1,4 +1,4 @@
-package org.example.tpo04blog.services;
+package org.example.tpo04blog.services.base;
 
 import java.util.List;
 
