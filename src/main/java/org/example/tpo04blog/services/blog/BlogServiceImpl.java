@@ -3,11 +3,13 @@ package org.example.tpo04blog.services.blog;
 import org.example.tpo04blog.entities.Blog;
 import org.example.tpo04blog.repositories.BlogRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class BlogServiceImpl implements BlogService {
     private final BlogRepository blogRepository;
 

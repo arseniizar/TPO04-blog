@@ -10,8 +10,10 @@ import org.example.tpo04blog.entities.Blog;
 import org.example.tpo04blog.entities.Role;
 import org.example.tpo04blog.entities.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 @Controller
+@Transactional
 public class CompoundController {
     private final UserController userController;
     private final BlogController blogController;

@@ -3,11 +3,13 @@ package org.example.tpo04blog.services.article;
 import org.example.tpo04blog.entities.Article;
 import org.example.tpo04blog.repositories.ArticleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
 

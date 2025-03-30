@@ -59,8 +59,8 @@ public class Article {
         return "Article{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author=" + author +
-                ", blog=" + blog +
+                ", authorId=" + (author != null ? author.getId() : null) +
+                ", blogId=" + (blog != null ? blog.getId() : null) +
                 '}';
     }
 }
