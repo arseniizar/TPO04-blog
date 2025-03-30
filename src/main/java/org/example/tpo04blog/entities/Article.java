@@ -19,9 +19,6 @@ public class Article {
     @JoinColumn(name = "blog_id", nullable = false)
     private Blog blog;
 
-    public Article() {
-    }
-
     public Long getId() {
         return id;
     }

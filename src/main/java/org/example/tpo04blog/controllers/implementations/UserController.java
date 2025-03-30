@@ -6,6 +6,8 @@ import org.example.tpo04blog.services.base.GenericCrudService;
 import org.example.tpo04blog.services.user.UserService;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 @Controller
 public class UserController extends AbstractGenericCrudController<User, Long> {
 
@@ -18,5 +20,9 @@ public class UserController extends AbstractGenericCrudController<User, Long> {
     @Override
     protected GenericCrudService<User, Long> getService() {
         return userService;
+    }
+
+    public List<User> findUsersByEmailContaining(String keyword) {
+        return userService.findUsersByEmailContaining(keyword);
     }
 }

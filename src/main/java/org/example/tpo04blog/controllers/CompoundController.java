@@ -12,6 +12,8 @@ import org.example.tpo04blog.entities.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Controller
 @Transactional
 public class CompoundController {
@@ -69,9 +71,10 @@ public class CompoundController {
         return roleController.searchById(id);
     }
 
-    public void searchArticle(Long id) {
+    public Article searchArticle(Long id) {
         Article article = articleController.searchById(id);
         System.out.println(article);
+        return article;
     }
 
     public void deleteUser(Long id) {
@@ -90,24 +93,19 @@ public class CompoundController {
         articleController.delete(id);
     }
 
-
-    public User getUserById(Long userId) {
-        return userController.searchById(userId);
-    }
-
-    public Role getRoleById(Long roleId) {
-        return roleController.searchById(roleId);
-    }
-
-    public Blog getBlogById(Long blogId) {
-        return blogController.searchById(blogId);
-    }
-
     public void updateUser(User user) {
         userController.update(user.getId(), user);
     }
 
     public void updateBlog(Blog blog) {
         blogController.update(blog.getId(), blog);
+    }
+
+    public void updateArticle(Article article) {
+        articleController.update(article.getId(), article);
+    }
+
+    public List<User> findUsersByEmailContaining(String keyword) {
+        return userController.findUsersByEmailContaining(keyword);
     }
 }

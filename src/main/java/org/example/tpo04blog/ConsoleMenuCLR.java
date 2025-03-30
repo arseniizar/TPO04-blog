@@ -8,7 +8,7 @@ import org.example.tpo04blog.entities.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Scanner;
+import java.util.*;
 
 @Component
 public class ConsoleMenuCLR implements CommandLineRunner {
@@ -50,6 +50,9 @@ public class ConsoleMenuCLR implements CommandLineRunner {
         System.out.println(" 13. Delete article by ID");
         System.out.println(" 14. Assign role to user");
         System.out.println(" 15. Set blog manager");
+        System.out.println(" 16. Set blog articles");
+        System.out.println(" 17. Assign role to user");
+        System.out.println(" 18. Search users by email containing a keyword: ");
         System.out.println("  0. Exit");
         System.out.println("====================================");
     }
@@ -111,6 +114,15 @@ public class ConsoleMenuCLR implements CommandLineRunner {
                     break;
                 case 15:
                     setBlogManager();
+                    break;
+                case 16:
+                    setBlogArticles();
+                    break;
+                case 17:
+                    assignAuthorToArticle();
+                    break;
+                case 18:
+                    searchUsersByEmail();
                     break;
                 case 0:
                     System.out.println("Exiting application.");
@@ -174,42 +186,50 @@ public class ConsoleMenuCLR implements CommandLineRunner {
 
     private void searchUserById() {
         Long id = scanLong("Enter user ID to search: ");
-        compoundController.searchUser(id);
+        User foundUser = compoundController.searchUser(id);
+        System.out.println(foundUser);
     }
 
     private void searchBlogById() {
         Long id = scanLong("Enter blog ID to search: ");
-        compoundController.searchBlog(id);
+        Blog foundBlog = compoundController.searchBlog(id);
+        System.out.println(foundBlog);
     }
 
     private void searchRoleById() {
         Long id = scanLong("Enter role ID to search: ");
-        compoundController.searchRole(id);
+        Role foundRole = compoundController.searchRole(id);
+        System.out.println(foundRole);
     }
 
     private void searchArticleById() {
         Long id = scanLong("Enter article ID to search: ");
-        compoundController.searchArticle(id);
+        Article foundArticle = compoundController.searchArticle(id);
+        System.out.println(foundArticle);
     }
 
     private void deleteUserById() {
         Long id = scanLong("Enter user ID to delete: ");
         compoundController.deleteUser(id);
+        System.out.println("User with ID " + id + " deleted.");
     }
 
     private void deleteBlogById() {
         Long id = scanLong("Enter blog ID to delete: ");
         compoundController.deleteBlog(id);
+        System.out.println("Deleted blog with ID " + id);
     }
 
     private void deleteRoleById() {
         Long id = scanLong("Enter role ID to delete: ");
         compoundController.deleteRole(id);
+        System.out.println("Deleted role with ID " + id);
     }
 
     private void deleteArticleById() {
         Long id = scanLong("Enter article ID to delete: ");
         compoundController.deleteArticle(id);
+        System.out.println("Deleted article with ID " + id);
     }
 
     private void assignRoleToUser() {
@@ -246,6 +266,71 @@ public class ConsoleMenuCLR implements CommandLineRunner {
         blog.setManager(manager);
         compoundController.updateBlog(blog);
         System.out.println("User '" + manager.getEmail() + "' is now the manager of blog '" + blog.getName() + "'.");
+    }
+
+    private void setBlogArticles() {
+        Long blogId = scanLong("Enter blog ID: ");
+        Blog blog = compoundController.searchBlog(blogId);
+        if (blog == null) {
+            System.out.println("Blog not found.");
+            return;
+        }
+
+        Set<Article> articles = new HashSet<>();
+        System.out.println("|INFO| Right now you are able to set multiple articles to one blog" +
+                "\nif you want to go back, type \"-1\"");
+        while (true) {
+            Long articleId = scanLong("Enter article ID: ");
+            if (articleId == -1) {
+                break;
+            }
+            Article article = compoundController.searchArticle(articleId);
+            if (article == null) {
+                System.out.println("Article not found.");
+                continue;
+            }
+            article.setBlog(blog);
+            articles.add(article);
+        }
+        if (!articles.isEmpty()) {
+            System.out.println(articles);
+            blog.setArticles(articles);
+            compoundController.updateBlog(blog);
+            System.out.println("Articles are successfully set.");
+        } else {
+            System.out.println("There are no articles to set.");
+        }
+    }
+
+    private void assignAuthorToArticle() {
+        Long articleId = scanLong("Enter article ID: ");
+        Article article = compoundController.searchArticle(articleId);
+        if (article == null) {
+            System.out.println("Article not found.");
+            return;
+        }
+        Long newAuthorId = scanLong("Enter new author ID: ");
+        User newAuthor = compoundController.searchUser(newAuthorId);
+        if (newAuthor == null) {
+            System.out.println("User not found.");
+            return;
+        }
+        article.setAuthor(newAuthor);
+        Set<Article> updatedUserArticles = newAuthor.getArticles();
+        updatedUserArticles.add(article);
+        compoundController.updateArticle(article);
+        compoundController.updateUser(newAuthor);
+        System.out.println("Article with ID " + articleId + " now has author '" + newAuthor.getEmail() + "'.");
+    }
+
+    private void searchUsersByEmail() {
+        String keyword = scanAndValidateString("Enter email keyword to search: ");
+        List<User> users = compoundController.findUsersByEmailContaining(keyword);
+        if (users.isEmpty()) {
+            System.out.println("No users found with the given keyword.");
+        } else {
+            users.forEach(System.out::println);
+        }
     }
 
     private String scanAndValidateString(String prompt) {

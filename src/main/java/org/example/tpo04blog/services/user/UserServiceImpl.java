@@ -63,4 +63,9 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.deleteById(id);
     }
+
+    @Override
+    public List<User> findUsersByEmailContaining(String keyword) {
+        return userRepository.findUsersByEmailContaining(keyword);
+    }
 }

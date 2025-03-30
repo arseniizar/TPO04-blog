@@ -43,6 +43,7 @@ public class Blog {
 
     public void setArticles(Set<Article> articles) {
         this.articles = articles;
+        System.out.println("INSIDE BLOG" + this.articles);
     }
 
     public User getManager() {
