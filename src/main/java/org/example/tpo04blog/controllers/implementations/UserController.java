@@ -25,4 +25,8 @@ public class UserController extends AbstractGenericCrudController<User, Long> {
     public List<User> findUsersByEmailContaining(String keyword) {
         return userService.findUsersByEmailContaining(keyword);
     }
+
+    public void assignRole(Long userId, Long roleId) {
+        userService.assignRoleToUser(userId, roleId);
+    }
 }

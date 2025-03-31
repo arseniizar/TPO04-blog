@@ -6,6 +6,8 @@ import org.example.tpo04blog.services.base.GenericCrudService;
 import org.example.tpo04blog.services.blog.BlogService;
 import org.springframework.stereotype.Controller;
 
+import java.util.Set;
+
 @Controller
 public class BlogController extends AbstractGenericCrudController<Blog, Long> {
     private final BlogService blogService;
@@ -17,5 +19,13 @@ public class BlogController extends AbstractGenericCrudController<Blog, Long> {
     @Override
     protected GenericCrudService<Blog, Long> getService() {
         return blogService;
+    }
+
+    public void setManager(Long blogId, Long managerId) {
+        blogService.setBlogManager(blogId, managerId);
+    }
+
+    public void setArticles(Long blogId, Set<Long> articleIds) {
+        blogService.setBlogArticles(blogId, articleIds);
     }
 }

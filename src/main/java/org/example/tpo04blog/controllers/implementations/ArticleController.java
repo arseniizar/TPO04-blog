@@ -18,4 +18,12 @@ public class ArticleController extends AbstractGenericCrudController<Article, Lo
     protected GenericCrudService<Article, Long> getService() {
         return articleService;
     }
+
+    public void addArticleWithAssociations(String title, Long authorId, Long blogId) {
+        articleService.createArticleWithAssociations(title, authorId, blogId);
+    }
+
+    public void assignAuthor(Long articleId, Long authorId) {
+        articleService.assignArticleAuthor(articleId, authorId);
+    }
 }

@@ -51,8 +51,8 @@ public class ConsoleMenuCLR implements CommandLineRunner {
         System.out.println(" 14. Assign role to user");
         System.out.println(" 15. Set blog manager");
         System.out.println(" 16. Set blog articles");
-        System.out.println(" 17. Assign role to user");
-        System.out.println(" 18. Search users by email containing a keyword: ");
+        System.out.println(" 17. Assign author to article");
+        System.out.println(" 18. Search users by email containing a keyword");
         System.out.println("  0. Exit");
         System.out.println("====================================");
     }
@@ -132,7 +132,7 @@ public class ConsoleMenuCLR implements CommandLineRunner {
                     break;
             }
         } catch (Exception ex) {
-            System.out.println("An error occurred: " + ex.getMessage());
+            System.err.println("An error occurred: " + ex.getMessage());
         }
         System.out.println();
         return false;
@@ -147,6 +147,7 @@ public class ConsoleMenuCLR implements CommandLineRunner {
         User user = new User();
         user.setEmail(email);
         compoundController.addUser(user);
+        System.out.println("User with email '" + email + "' added.");
     }
 
     private void addNewBlog() {
@@ -154,6 +155,7 @@ public class ConsoleMenuCLR implements CommandLineRunner {
         Blog blog = new Blog();
         blog.setName(blogName);
         compoundController.addBlog(blog);
+        System.out.println("Blog '" + blogName + "' added.");
     }
 
     private void addNewRole() {
@@ -161,175 +163,135 @@ public class ConsoleMenuCLR implements CommandLineRunner {
         Role role = new Role();
         role.setName(roleName);
         compoundController.addRole(role);
+        System.out.println("Role '" + roleName + "' added.");
     }
 
     private void addNewArticle() {
         String title = scanAndValidateString("Enter article title: ");
         Long authorId = scanLong("Enter author ID: ");
         Long blogId = scanLong("Enter blog ID: ");
-        Article article = new Article();
-        article.setTitle(title);
-        User author = compoundController.searchUser(authorId);
-        Blog blog = compoundController.searchBlog(blogId);
-        if (author == null) {
-            System.out.println("Author with ID " + authorId + " not found.");
-            return;
-        }
-        if (blog == null) {
-            System.out.println("Blog with ID " + blogId + " not found.");
-            return;
-        }
-        article.setAuthor(author);
-        article.setBlog(blog);
-        compoundController.addArticle(article);
+        compoundController.addArticle(title, authorId, blogId);
+        System.out.println("Article '" + title + "' added and associated with Author ID " + authorId + " and Blog ID " + blogId + ".");
     }
+
 
     private void searchUserById() {
         Long id = scanLong("Enter user ID to search: ");
         User foundUser = compoundController.searchUser(id);
-        System.out.println(foundUser);
+        if (foundUser != null) {
+            System.out.println(foundUser);
+        } else {
+            System.out.println("User with ID " + id + " not found.");
+        }
     }
 
     private void searchBlogById() {
         Long id = scanLong("Enter blog ID to search: ");
         Blog foundBlog = compoundController.searchBlog(id);
-        System.out.println(foundBlog);
+        if (foundBlog != null) {
+            System.out.println(foundBlog);
+        } else {
+            System.out.println("Blog with ID " + id + " not found.");
+        }
     }
 
     private void searchRoleById() {
         Long id = scanLong("Enter role ID to search: ");
         Role foundRole = compoundController.searchRole(id);
-        System.out.println(foundRole);
+        if (foundRole != null) {
+            System.out.println(foundRole);
+        } else {
+            System.out.println("Role with ID " + id + " not found.");
+        }
     }
 
     private void searchArticleById() {
         Long id = scanLong("Enter article ID to search: ");
         Article foundArticle = compoundController.searchArticle(id);
-        System.out.println(foundArticle);
     }
 
     private void deleteUserById() {
         Long id = scanLong("Enter user ID to delete: ");
         compoundController.deleteUser(id);
-        System.out.println("User with ID " + id + " deleted.");
+        System.out.println("Attempted to delete user with ID " + id + ".");
     }
 
     private void deleteBlogById() {
         Long id = scanLong("Enter blog ID to delete: ");
         compoundController.deleteBlog(id);
-        System.out.println("Deleted blog with ID " + id);
+        System.out.println("Attempted to delete blog with ID " + id + ".");
     }
 
     private void deleteRoleById() {
         Long id = scanLong("Enter role ID to delete: ");
         compoundController.deleteRole(id);
-        System.out.println("Deleted role with ID " + id);
+        System.out.println("Attempted to delete role with ID " + id + ".");
     }
 
     private void deleteArticleById() {
         Long id = scanLong("Enter article ID to delete: ");
         compoundController.deleteArticle(id);
-        System.out.println("Deleted article with ID " + id);
+        System.out.println("Attempted to delete article with ID " + id + ".");
     }
 
     private void assignRoleToUser() {
         Long userId = scanLong("Enter user ID: ");
-        User user = compoundController.searchUser(userId);
-        if (user == null) {
-            System.out.println("User not found.");
-            return;
-        }
         Long roleId = scanLong("Enter role ID to assign: ");
-        Role role = compoundController.searchRole(roleId);
-        if (role == null) {
-            System.out.println("Role not found.");
-            return;
-        }
-        user.getRoles().add(role);
-        compoundController.updateUser(user);
-        System.out.println("Role '" + role.getName() + "' assigned to user with email '" + user.getEmail() + "'.");
+        compoundController.assignRoleToUser(userId, roleId);
+        System.out.println("Attempted to assign Role ID " + roleId + " to User ID " + userId + ".");
     }
 
     private void setBlogManager() {
         Long blogId = scanLong("Enter blog ID: ");
-        Blog blog = compoundController.searchBlog(blogId);
-        if (blog == null) {
-            System.out.println("Blog not found.");
-            return;
-        }
         Long userId = scanLong("Enter manager user ID: ");
-        User manager = compoundController.searchUser(userId);
-        if (manager == null) {
-            System.out.println("User not found.");
-            return;
-        }
-        blog.setManager(manager);
-        compoundController.updateBlog(blog);
-        System.out.println("User '" + manager.getEmail() + "' is now the manager of blog '" + blog.getName() + "'.");
+        compoundController.setBlogManager(blogId, userId);
+        System.out.println("Attempted to set User ID " + userId + " as manager for Blog ID " + blogId + ".");
     }
 
     private void setBlogArticles() {
-        Long blogId = scanLong("Enter blog ID: ");
-        Blog blog = compoundController.searchBlog(blogId);
-        if (blog == null) {
-            System.out.println("Blog not found.");
-            return;
-        }
+        Long blogId = scanLong("Enter blog ID to assign articles to: ");
+        Set<Long> articleIds = new HashSet<>();
+        System.out.println("|INFO| Enter article IDs to assign to the blog." +
+                "\nType \"-1\" when finished.");
 
-        Set<Article> articles = new HashSet<>();
-        System.out.println("|INFO| Right now you are able to set multiple articles to one blog" +
-                "\nif you want to go back, type \"-1\"");
         while (true) {
-            Long articleId = scanLong("Enter article ID: ");
+            Long articleId = scanLong("Enter article ID (or -1 to finish): ");
             if (articleId == -1) {
                 break;
             }
-            Article article = compoundController.searchArticle(articleId);
-            if (article == null) {
-                System.out.println("Article not found.");
+            if (articleId < 0) {
+                System.out.println("Invalid ID. Please enter a positive ID or -1.");
                 continue;
             }
-            article.setBlog(blog);
-            articles.add(article);
+            articleIds.add(articleId);
         }
-        if (!articles.isEmpty()) {
-            System.out.println(articles);
-            blog.setArticles(articles);
-            compoundController.updateBlog(blog);
-            System.out.println("Articles are successfully set.");
+
+        if (!articleIds.isEmpty()) {
+            compoundController.setBlogArticles(blogId, articleIds);
+            System.out.println("Attempted to associate " + articleIds.size() + " articles with Blog ID " + blogId + ".");
         } else {
-            System.out.println("There are no articles to set.");
+            System.out.println("No article IDs were entered to assign.");
         }
     }
 
+
     private void assignAuthorToArticle() {
         Long articleId = scanLong("Enter article ID: ");
-        Article article = compoundController.searchArticle(articleId);
-        if (article == null) {
-            System.out.println("Article not found.");
-            return;
-        }
         Long newAuthorId = scanLong("Enter new author ID: ");
-        User newAuthor = compoundController.searchUser(newAuthorId);
-        if (newAuthor == null) {
-            System.out.println("User not found.");
-            return;
-        }
-        article.setAuthor(newAuthor);
-        Set<Article> updatedUserArticles = newAuthor.getArticles();
-        updatedUserArticles.add(article);
-        compoundController.updateArticle(article);
-        compoundController.updateUser(newAuthor);
-        System.out.println("Article with ID " + articleId + " now has author '" + newAuthor.getEmail() + "'.");
+        compoundController.assignAuthorToArticle(articleId, newAuthorId);
+        System.out.println("Attempted to assign User ID " + newAuthorId + " as author for Article ID " + articleId + ".");
     }
+
 
     private void searchUsersByEmail() {
         String keyword = scanAndValidateString("Enter email keyword to search: ");
         List<User> users = compoundController.findUsersByEmailContaining(keyword);
-        if (users.isEmpty()) {
-            System.out.println("No users found with the given keyword.");
+        if (users == null || users.isEmpty()) {
+            System.out.println("No users found with the email keyword: '" + keyword + "'.");
         } else {
+            System.out.println("--- Users found containing keyword '" + keyword + "' ---");
             users.forEach(System.out::println);
+            System.out.println("--------------------------------------------------");
         }
     }
 
@@ -349,11 +311,14 @@ public class ConsoleMenuCLR implements CommandLineRunner {
         Long number = null;
         while (number == null) {
             System.out.print(prompt);
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().trim();
             try {
-                number = Long.parseLong(input.trim());
+                number = Long.parseLong(input);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid number. Please try again.");
+                if (prompt.contains("-1 to finish") && input.equals("-1")) {
+                    return -1L;
+                }
+                System.out.println("Invalid number format. Please enter a valid whole number.");
             }
         }
         return number;

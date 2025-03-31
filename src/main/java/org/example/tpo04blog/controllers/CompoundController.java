@@ -1,4 +1,3 @@
-
 package org.example.tpo04blog.controllers;
 
 import org.example.tpo04blog.controllers.implementations.ArticleController;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Transactional
@@ -31,6 +31,7 @@ public class CompoundController {
         this.roleController = roleController;
         this.articleController = articleController;
     }
+
 
     public void viewAllData() {
         System.out.println("---- Users ----");
@@ -73,7 +74,9 @@ public class CompoundController {
 
     public Article searchArticle(Long id) {
         Article article = articleController.searchById(id);
-        System.out.println(article);
+        if (article != null) {
+            System.out.println(article);
+        }
         return article;
     }
 
@@ -107,5 +110,28 @@ public class CompoundController {
 
     public List<User> findUsersByEmailContaining(String keyword) {
         return userController.findUsersByEmailContaining(keyword);
+    }
+
+
+
+    public void addArticle(String title, Long authorId, Long blogId) {
+        articleController.addArticleWithAssociations(title, authorId, blogId);
+    }
+
+
+    public void assignRoleToUser(Long userId, Long roleId) {
+        userController.assignRole(userId, roleId);
+    }
+
+    public void setBlogManager(Long blogId, Long managerId) {
+        blogController.setManager(blogId, managerId);
+    }
+
+    public void setBlogArticles(Long blogId, Set<Long> articleIds) {
+        blogController.setArticles(blogId, articleIds);
+    }
+
+    public void assignAuthorToArticle(Long articleId, Long authorId) {
+        articleController.assignAuthor(articleId, authorId);
     }
 }
